@@ -4,18 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
     <div class="container login-container">
         <div class="card">
             <div class="card-body">
-                <h2>Login</h2>
+                <h3>Notes App</h3>
                 <p>Simple note taking app</p>
-                <form action="/auth/google" method="get">
-                    <button type="submit">Log in with Google</button>
-                </form>
+                <a href="/auth/google" class="btn red darken-1">
+                    <i class="fab fa-google left"></i>Log in with Google
+                </a>
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>

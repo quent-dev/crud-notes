@@ -2,7 +2,9 @@ console.log("Starting server");
 const express = require("express");
 const app = express();
 const passport = require("passport");
+const mongoose = require("mongoose");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const connectDB = require("./config/database");
 const loginRoutes = require("./routes/login");
 const homeRoutes = require("./routes/home");
@@ -11,6 +13,13 @@ const notesRoutes = require("./routes/notes");
 // Load config
 require("dotenv").config({ path: "./config/.env" });
 const port = process.env.PORT || 3000;
+
+const dbUrl = process.env.DATABASE_URL;
+const dbAdmin = process.env.DB_ADMIN;
+const dbPassword = process.env.DB_PASSWORD;
+
+const mongoUrl = `mongodb+srv://${encodeURIComponent(dbAdmin)}:${encodeURIComponent(dbPassword)}@${dbUrl}/?retryWrites=true&w=majority`;
+
 
 // Passport config
 require("./config/passport")(passport);
@@ -31,8 +40,15 @@ app.use(express.json())
 app.use(session({
     secret: 'secret-key',
     resave: false, // Don't save session if unmodified
-    saveUninitialized: false // Don't create session until something stored
+    saveUninitialized: false, // Don't create session until something stored
+    store: MongoStore.create({ 
+        mongooseConnection: mongoose.connection,
+        mongoUrl: mongoUrl,
+        ttl: 7 * 24 * 60 * 60   // 7 days}), 
+    }),
 }))
+
+
 
 // Passport middleware
 app.use(passport.initialize());
